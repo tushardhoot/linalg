@@ -1,6 +1,12 @@
 package com.radianapps.linalg;
 
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
+import android.os.Bundle;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,8 +15,39 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
  * Time: 1:05 AM
  * To change this template use File | Settings | File Templates.
  */
-public class DashboardActivity extends SlidingActivity {
+public class DashboardActivity extends SlidingFragmentActivity {
+    ActionBar actionBar;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.dashboard);
+        setBehindContentView(R.layout.slidingmenu);
 
+        SlidingMenu sm = getSlidingMenu();
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        sm.setTouchModeBehind(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getSupportMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                toggle();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
