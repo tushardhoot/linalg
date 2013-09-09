@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:text="Rows:" />
+        <Spinner
+            android:id="@+id/rowSpinner"
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:spinnerMode="dropdown"
+            android:dropDownWidth="100dp" />
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:text="Columns:" />
+        <Spinner
+                android:id="@+id/colSpinner"
+                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:spinnerMode="dropdown"
+                android:dropDownWidth="100dp" />
+    </LinearLayout>
+    <com.radianapps.linalg.views.Matrix
+        android:id="@+id/matrixHolder"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:orientation="vertical">
+    </com.radianapps.linalg.views.Matrix>
+
+</LinearLayout>

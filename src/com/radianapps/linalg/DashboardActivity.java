@@ -1,12 +1,15 @@
 package com.radianapps.linalg;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.radianapps.linalg.displays.MatrixInputFragment;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +34,11 @@ public class DashboardActivity extends SlidingFragmentActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.displayHolder, new MatrixInputFragment());
+        fragmentTransaction.commit();
     }
 
     @Override
