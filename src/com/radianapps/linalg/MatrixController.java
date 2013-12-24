@@ -1,6 +1,5 @@
 package com.radianapps.linalg;
 
-import android.util.Log;
 import com.radianapps.linalg.views.Matrix;
 
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class MatrixController {
+
+    private Position focus = new Position();
 
     private List<List<Integer>> data;
     private List<Matrix> views;
@@ -45,8 +46,18 @@ public class MatrixController {
             }
         }
 
+        boolean focusChanged = !focus.inLimits(newRows, newCols);
+        if (focusChanged) {
+            focus.x = 0;
+            focus.y = 0;
+            focus.setValid(true);
+        }
+
         for (Matrix view : views) {
             view.resize(newRows, newCols);
+            if (focusChanged) {
+                view.setFocus(focus);
+            }
         }
     }
 
@@ -54,7 +65,6 @@ public class MatrixController {
         views.add(matrix);
 
         int numCols = (!data.isEmpty()) ? data.get(0).size() : 0;
-        Log.e("registerView", "a " + data.size() + " b " + numCols);
         matrix.resize(data.size(), numCols);
         matrix.registerController(this);
 
@@ -65,6 +75,9 @@ public class MatrixController {
             }
         }
 
+        if (focus.inLimits(data.size(), numCols)) {
+            matrix.setFocus(focus);
+        }
     }
 
     public void unregisterView(Matrix matrix) {

@@ -1,14 +1,14 @@
 package com.radianapps.linalg.views;
 
-import android.R;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import com.radianapps.linalg.MatrixController;
+import com.radianapps.linalg.Position;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +20,8 @@ import com.radianapps.linalg.MatrixController;
 public class Matrix extends TableLayout {
     private int rows = 0, cols = 0;
     private MatrixController controller;
+
+    private Position focus;
 
     private final TableRow.LayoutParams rowLp =
             new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
@@ -55,6 +57,7 @@ public class Matrix extends TableLayout {
                 for (int j = oldCols; j < newCols; ++j) {
                     ++oldCols;
                     TextView cell = new TextView(getContext());
+                    cell.setText(Integer.toString(oldCols));
                     tableRow.addView(cell);
                 }
             } else {
@@ -67,8 +70,29 @@ public class Matrix extends TableLayout {
         cols = newCols;
     }
 
+    public void setFocus(Position focus) {
+        if (this.focus != null) {
+            unfocusOnCell(this.focus);
+        }
+        if (focus != null) {
+            focusOnCell(focus);
+        }
+
+        this.focus = focus;
+    }
+
     public void setCellAt(int row, int col, int value) {
         ((TextView)((TableRow)getChildAt(row)).getChildAt(col)).setText(String.valueOf(value));
+    }
+
+    public void focusOnCell(Position cellToFocus) {
+        // TODO: Make focus colour variable
+        ((TextView)((TableRow)getChildAt(cellToFocus.x)).getChildAt(cellToFocus.y)).setBackgroundColor(Color.YELLOW);
+    }
+
+    public void unfocusOnCell(Position cellToUnFocus) {
+        // TODO: Make background colour variable
+        ((TextView)((TableRow)getChildAt(cellToUnFocus.x)).getChildAt(cellToUnFocus.y)).setBackgroundColor(Color.TRANSPARENT);
     }
 
     public int rowCount() {
