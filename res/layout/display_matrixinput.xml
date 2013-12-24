@@ -31,12 +31,17 @@
     </LinearLayout>
     <com.radianapps.linalg.views.Matrix
         android:id="@+id/matrixHolder"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:padding="10dp"
         android:shrinkColumns="*"
         android:stretchColumns="*"
         android:orientation="vertical">
     </com.radianapps.linalg.views.Matrix>
+    
+    <com.radianapps.linalg.views.MatrixIME
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    </com.radianapps.linalg.views.MatrixIME>
 
 </LinearLayout>
