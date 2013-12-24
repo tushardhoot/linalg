@@ -21,7 +21,7 @@ public class MatrixIME extends RelativeLayout {
 
     private MatrixController matrixController;
     final private int DECIMAL = -1;
-    enum Nav { UP, RIGHT, DOWN, LEFT };
+    public static enum Nav { UP, RIGHT, DOWN, LEFT };
 
     public MatrixIME(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -140,7 +140,7 @@ public class MatrixIME extends RelativeLayout {
 
     private void broadcastNavInput(Nav nav) {
         if (matrixController != null) {
-            // TODO:    matrixController.navInput(nav);
+            matrixController.navInput(nav);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.radianapps.linalg;
 
 import com.radianapps.linalg.views.Matrix;
+import com.radianapps.linalg.views.MatrixIME;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,15 @@ public class MatrixController {
     private List<List<Integer>> data;
     private List<Matrix> views;
 
+    private MatrixIME ime;
+
     public MatrixController() {
         data = new ArrayList<List<Integer>>();
         views = new ArrayList<Matrix>();
     }
 
     public void resizeMatrix(int newRows, int newCols) {
-        int oldRows = data.size();
+        int oldRows = numRows();
 
         if (oldRows < newRows) {
             for (int i = oldRows; i < newRows; ++i) {
@@ -61,11 +64,65 @@ public class MatrixController {
         }
     }
 
+    public void registerIME(MatrixIME ime) {
+        this.ime = ime;
+        if (ime != null) {
+            ime.registerController(this);
+        }
+    }
+
+    public void navInput(MatrixIME.Nav nav) {
+        int numCols = numCols();
+        int numRows = numRows();
+
+        switch (nav) {
+            case UP:
+                if (focus.y < numCols) {
+                    ++focus.y;
+                } else {
+                    focus.y = 0;
+                }
+                break;
+            case DOWN:
+                if (focus.y > 0) {
+                    --focus.y;
+                } else {
+                    focus.y = numCols;
+                }
+                break;
+            case RIGHT:
+                if (focus.x < numCols) {
+                    ++focus.x;
+                } else {
+                    focus.x = 0;
+                }
+                break;
+            case LEFT:
+                if (focus.x > 0) {
+                    --focus.x;
+                } else {
+                    focus.x = numRows;
+                }
+                break;
+        }
+
+        for (Matrix view : views) {
+            view.setFocus(focus);
+        }
+    }
+
+    private int numCols() {
+        return (!data.isEmpty()) ? data.get(0).size() : 0;
+    }
+
+    private int numRows() {
+        return data.size();
+    }
+
     public void registerView(Matrix matrix) {
         views.add(matrix);
 
-        int numCols = (!data.isEmpty()) ? data.get(0).size() : 0;
-        matrix.resize(data.size(), numCols);
+        matrix.resize(numRows(), numCols());
         matrix.registerController(this);
 
         for (int rowIndex = 0; rowIndex < data.size(); ++rowIndex) {
@@ -75,7 +132,7 @@ public class MatrixController {
             }
         }
 
-        if (focus.inLimits(data.size(), numCols)) {
+        if (focus.inLimits(numRows(), numCols())) {
             matrix.setFocus(focus);
         }
     }
