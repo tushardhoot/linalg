@@ -21,6 +21,7 @@ public class MatrixIME extends RelativeLayout {
 
     private MatrixController matrixController;
     final private int DECIMAL = -1;
+    enum Nav { UP, RIGHT, DOWN, LEFT };
 
     public MatrixIME(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,6 +30,38 @@ public class MatrixIME extends RelativeLayout {
         inflater.inflate(R.layout.inputmethod, this, true);
 
         setupNumPad();
+        setupNavigation();
+    }
+
+    private void setupNavigation() {
+        OnClickListener navHandler = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.upArrow:
+                        navInput(Nav.UP);
+                        break;
+                    case R.id.rightArrow:
+                        navInput(Nav.RIGHT);
+                        break;
+                    case R.id.downArrow:
+                        navInput(Nav.DOWN);
+                        break;
+                    case R.id.leftArrow:
+                        navInput(Nav.LEFT);
+                        break;
+                }
+            }
+        };
+
+        findViewById(R.id.upArrow).setOnClickListener(navHandler);
+        findViewById(R.id.rightArrow).setOnClickListener(navHandler);
+        findViewById(R.id.downArrow).setOnClickListener(navHandler);
+        findViewById(R.id.leftArrow).setOnClickListener(navHandler);
+    }
+
+    private void navInput(Nav nav) {
+        broadcastNavInput(nav);
     }
 
     private void numericInput(int number) {
@@ -90,6 +123,12 @@ public class MatrixIME extends RelativeLayout {
     private void broadcastNumericInput(int number) {
         if (matrixController != null) {
             // TODO:    matrixController.numericInput(number);
+        }
+    }
+
+    private void broadcastNavInput(Nav nav) {
+        if (matrixController != null) {
+            // TODO:    matrixController.navInput(nav);
         }
     }
 
