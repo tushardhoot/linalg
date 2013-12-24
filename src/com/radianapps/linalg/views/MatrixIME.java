@@ -60,14 +60,6 @@ public class MatrixIME extends RelativeLayout {
         findViewById(R.id.leftArrow).setOnClickListener(navHandler);
     }
 
-    private void navInput(Nav nav) {
-        broadcastNavInput(nav);
-    }
-
-    private void numericInput(int number) {
-        broadcastNumericInput(number);
-    }
-
     private void setupNumPad() {
         ViewGroup numPad = (ViewGroup) findViewById(R.id.numPad);
 
@@ -89,6 +81,14 @@ public class MatrixIME extends RelativeLayout {
         findViewById(R.id.numberEight).setOnClickListener(numHandler);
         findViewById(R.id.numberNine).setOnClickListener(numHandler);
         findViewById(R.id.numberDecimal).setOnClickListener(numHandler);
+    }
+
+    private void navInput(Nav nav) {
+        broadcastNavInput(nav);
+    }
+
+    private void numericInput(int number) {
+        broadcastNumericInput(number);
     }
 
     private int numPadButtonToInt(View v) {
@@ -144,11 +144,11 @@ public class MatrixIME extends RelativeLayout {
         }
     }
 
-    private void registerController(MatrixController matrixController) {
+    public void registerController(MatrixController matrixController) {
         this.matrixController = matrixController;
     }
 
-    private void unregisterController() {
+    public void unregisterController() {
         this.matrixController = null;
     }
 }
