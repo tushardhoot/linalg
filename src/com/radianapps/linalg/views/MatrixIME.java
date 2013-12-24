@@ -71,12 +71,24 @@ public class MatrixIME extends RelativeLayout {
     private void setupNumPad() {
         ViewGroup numPad = (ViewGroup) findViewById(R.id.numPad);
 
-        OnClickListener clickHandler = new OnClickListener() {
+        OnClickListener numHandler = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 numericInput(numPadButtonToInt(v));
             }
         };
+
+        findViewById(R.id.numberZero).setOnClickListener(numHandler);
+        findViewById(R.id.numberOne).setOnClickListener(numHandler);
+        findViewById(R.id.numberTwo).setOnClickListener(numHandler);
+        findViewById(R.id.numberThree).setOnClickListener(numHandler);
+        findViewById(R.id.numberFour).setOnClickListener(numHandler);
+        findViewById(R.id.numberFive).setOnClickListener(numHandler);
+        findViewById(R.id.numberSix).setOnClickListener(numHandler);
+        findViewById(R.id.numberSeven).setOnClickListener(numHandler);
+        findViewById(R.id.numberEight).setOnClickListener(numHandler);
+        findViewById(R.id.numberNine).setOnClickListener(numHandler);
+        findViewById(R.id.numberDecimal).setOnClickListener(numHandler);
     }
 
     private int numPadButtonToInt(View v) {
