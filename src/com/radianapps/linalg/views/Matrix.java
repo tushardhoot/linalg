@@ -85,12 +85,12 @@ public class Matrix extends TableLayout {
         ((TextView)((TableRow)getChildAt(row)).getChildAt(col)).setText(String.valueOf(value));
     }
 
-    public void focusOnCell(Position cellToFocus) {
+    private void focusOnCell(Position cellToFocus) {
         // TODO: Make focus colour variable
         ((TextView)((TableRow)getChildAt(cellToFocus.x)).getChildAt(cellToFocus.y)).setBackgroundColor(Color.YELLOW);
     }
 
-    public void unfocusOnCell(Position cellToUnFocus) {
+    private void unfocusOnCell(Position cellToUnFocus) {
         // TODO: Make background colour variable
         ((TextView)((TableRow)getChildAt(cellToUnFocus.x)).getChildAt(cellToUnFocus.y)).setBackgroundColor(Color.TRANSPARENT);
     }
