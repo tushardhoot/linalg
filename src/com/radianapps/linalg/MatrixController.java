@@ -30,26 +30,30 @@ public class MatrixController {
     public void resizeMatrix(int newRows, int newCols) {
         int oldRows = numRows();
 
-        if (oldRows < newRows) {
+        if (oldRows <= newRows) {
             for (int i = oldRows; i < newRows; ++i) {
                 data.add(new ArrayList<Integer>());
             }
         } else {
-            data.subList(oldRows - newRows, oldRows).clear();
+            for (int i = oldRows; i > newRows; --i) {
+                data.remove(i - 1);
+            }
         }
 
         for (List<Integer> entries : data) {
             int oldCols = entries.size();
-            if (oldCols < newCols) {
+            if (oldCols <= newCols) {
                 for (int j = entries.size(); j < newCols; ++j) {
                     entries.add(0);
                 }
             } else {
-                entries.subList(oldCols - newCols, oldCols).clear();
+                for (int j = entries.size(); j > newCols; --j) {
+                    entries.remove(j - 1);
+                }
             }
         }
 
-        boolean focusChanged = !focus.inLimits(newRows, newCols);
+        boolean focusChanged = !focus.inLimits(newRows - 1, newCols - 1);
         if (focusChanged) {
             focus.x = 0;
             focus.y = 0;
@@ -132,7 +136,7 @@ public class MatrixController {
             }
         }
 
-        if (focus.inLimits(numRows(), numCols())) {
+        if (focus.inLimits(numRows() - 1, numCols() - 1)) {
             matrix.setFocus(focus);
         }
     }
