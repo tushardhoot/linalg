@@ -31,4 +31,9 @@ public class Position {
     public boolean isValid() {
         return valid;
     }
+
+    @Override
+    public String toString() {
+        return "Position -- x: " + this.x + " y: " + this.y;
+    }
 }
