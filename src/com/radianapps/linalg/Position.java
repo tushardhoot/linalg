@@ -18,6 +18,12 @@ public class Position {
         this.y = y;
     }
 
+    public Position(Position p) {
+        this.x = p.x;
+        this.y= p.y;
+        this.valid = p.valid;
+    }
+
     public boolean inLimits(int x, int y) {
         return valid &&
                ((this.x <= x) && (this.x >= 0)) &&
