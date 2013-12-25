@@ -76,36 +76,36 @@ public class MatrixController {
     }
 
     public void navInput(MatrixIME.Nav nav) {
-        int numCols = numCols();
-        int numRows = numRows();
+        int maxCol = numCols() - 1;
+        int maxRow = numRows() - 1;
 
         switch (nav) {
             case UP:
-                if (focus.y < numCols) {
-                    ++focus.y;
+                if (focus.x > 0) {
+                    --focus.x;
                 } else {
-                    focus.y = 0;
+                    focus.x = maxRow;
                 }
                 break;
             case DOWN:
-                if (focus.y > 0) {
-                    --focus.y;
-                } else {
-                    focus.y = numCols;
-                }
-                break;
-            case RIGHT:
-                if (focus.x < numCols) {
+                if (focus.x < maxRow) {
                     ++focus.x;
                 } else {
                     focus.x = 0;
                 }
                 break;
-            case LEFT:
-                if (focus.x > 0) {
-                    --focus.x;
+            case RIGHT:
+                if (focus.y < maxCol) {
+                    ++focus.y;
                 } else {
-                    focus.x = numRows;
+                    focus.y = 0;
+                }
+                break;
+            case LEFT:
+                if (focus.y > 0) {
+                    --focus.y;
+                } else {
+                    focus.y = maxCol;
                 }
                 break;
         }
