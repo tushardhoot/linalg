@@ -1,7 +1,6 @@
 package com.radianapps.linalg.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
@@ -9,6 +8,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import com.radianapps.linalg.MatrixController;
 import com.radianapps.linalg.Position;
+import com.radianapps.linalg.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,6 +57,7 @@ public class Matrix extends TableLayout {
                 for (int j = oldCols; j < newCols; ++j) {
                     ++oldCols;
                     TextView cell = new TextView(getContext());
+                    cell.setBackgroundResource(R.drawable.matrix_cell);
                     cell.setText(Integer.toString(oldCols));
                     tableRow.addView(cell);
                 }
@@ -71,14 +72,14 @@ public class Matrix extends TableLayout {
     }
 
     public void setFocus(Position focus) {
-        if (this.focus != null) {
+        if (this.focus != null && this.focus.inLimits(rows - 1, cols - 1)) {
             unfocusOnCell(this.focus);
         }
         if (focus != null) {
             focusOnCell(focus);
         }
 
-        this.focus = focus;
+        this.focus = new Position(focus);
     }
 
     public void setCellAt(int row, int col, int value) {
@@ -86,13 +87,11 @@ public class Matrix extends TableLayout {
     }
 
     private void focusOnCell(Position cellToFocus) {
-        // TODO: Make focus colour variable
-        ((TableRow)getChildAt(cellToFocus.x)).getChildAt(cellToFocus.y).setBackgroundColor(Color.YELLOW);
+        ((TableRow)getChildAt(cellToFocus.x)).getChildAt(cellToFocus.y).setSelected(true);
     }
 
     private void unfocusOnCell(Position cellToUnFocus) {
-        // TODO: Make background colour variable
-        ((TableRow)getChildAt(cellToUnFocus.x)).getChildAt(cellToUnFocus.y).setBackgroundColor(Color.TRANSPARENT);
+        ((TableRow)getChildAt(cellToUnFocus.x)).getChildAt(cellToUnFocus.y).setSelected(false);
     }
 
     public int rowCount() {
