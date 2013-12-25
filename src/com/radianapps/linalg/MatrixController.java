@@ -17,13 +17,13 @@ public class MatrixController {
 
     private Position focus = new Position();
 
-    private List<List<Integer>> data;
+    private List<List<MatrixData>> matrix;
     private List<Matrix> views;
 
     private MatrixIME ime;
 
     public MatrixController() {
-        data = new ArrayList<List<Integer>>();
+        matrix = new ArrayList<List<MatrixData>>();
         views = new ArrayList<Matrix>();
     }
 
@@ -32,19 +32,19 @@ public class MatrixController {
 
         if (oldRows <= newRows) {
             for (int i = oldRows; i < newRows; ++i) {
-                data.add(new ArrayList<Integer>());
+                matrix.add(new ArrayList<MatrixData>());
             }
         } else {
             for (int i = oldRows; i > newRows; --i) {
-                data.remove(i - 1);
+                matrix.remove(i - 1);
             }
         }
 
-        for (List<Integer> entries : data) {
+        for (List<MatrixData> entries : matrix) {
             int oldCols = entries.size();
             if (oldCols <= newCols) {
                 for (int j = entries.size(); j < newCols; ++j) {
-                    entries.add(0);
+                    entries.add(new MatrixData());
                 }
             } else {
                 for (int j = entries.size(); j > newCols; --j) {
@@ -68,11 +68,36 @@ public class MatrixController {
         }
     }
 
+    private MatrixData getDataFromMatrix(Position position) {
+        return matrix.get(position.x).get(position.y);
+    }
+
+    private MatrixData getFocusData() {
+        return getDataFromMatrix(focus);
+    }
+
+    private void putDataInMatrix(Position position, MatrixData data) {
+        matrix.get(position.x).set(position.y, data);
+        for (Matrix view : views) {
+            view.setCellAt(position, data);
+        }
+    }
+
+    private void putFocusData(MatrixData data) {
+        putDataInMatrix(focus, data);
+    }
+
     public void registerIME(MatrixIME ime) {
         this.ime = ime;
         if (ime != null) {
             ime.registerController(this);
         }
+    }
+
+    public void numericInput(int number) {
+        MatrixData data = getFocusData();
+        data.appendToStrData(number);
+        putFocusData(data);
     }
 
     public void navInput(MatrixIME.Nav nav) {
@@ -116,11 +141,11 @@ public class MatrixController {
     }
 
     private int numCols() {
-        return (!data.isEmpty()) ? data.get(0).size() : 0;
+        return (!matrix.isEmpty()) ? matrix.get(0).size() : 0;
     }
 
     private int numRows() {
-        return data.size();
+        return matrix.size();
     }
 
     public void registerView(Matrix matrix) {
@@ -129,10 +154,10 @@ public class MatrixController {
         matrix.resize(numRows(), numCols());
         matrix.registerController(this);
 
-        for (int rowIndex = 0; rowIndex < data.size(); ++rowIndex) {
-            List<Integer> row = data.get(rowIndex);
+        for (int rowIndex = 0; rowIndex < this.matrix.size(); ++rowIndex) {
+            List<MatrixData> row = this.matrix.get(rowIndex);
             for (int colIndex = 0; colIndex < row.size(); ++colIndex) {
-                matrix.setCellAt(rowIndex, colIndex, row.get(colIndex));
+                matrix.setCellAt(new Position(rowIndex, colIndex), row.get(colIndex));
             }
         }
 
@@ -144,6 +169,56 @@ public class MatrixController {
     public void unregisterView(Matrix matrix) {
         views.remove(matrix);
         matrix.unregisterController();
+    }
+
+    public static class MatrixData {
+        private double numData;
+        private String strData;
+        private boolean hasDecimalPoint;
+
+        public MatrixData() {
+            strData = "0";
+        }
+
+        public void setStrData(String strData) {
+            try {
+                numData = Double.parseDouble(strData);
+                this.strData = strData;
+                hasDecimalPoint = this.strData.contains(".");
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+        }
+
+        public void setNumData(double numData) {
+            this.numData = numData;
+            strData = Double.toString(numData);
+            hasDecimalPoint = this.strData.contains(".");
+        }
+
+        public void appendToStrData(int newChar) {
+            if (newChar == MatrixIME.DECIMAL && !hasDecimalPoint) {
+                strData += ".";
+                numData = Double.parseDouble(strData);
+                hasDecimalPoint = true;
+            } else if (newChar != MatrixIME.DECIMAL) {
+                strData += newChar;
+                numData = Double.parseDouble(strData);
+            }
+        }
+
+        public double getNumData() {
+            return numData;
+        }
+
+        public String getStrData() {
+            return strData;
+        }
+
+        public boolean hasDecimalPoint() {
+            return hasDecimalPoint;
+        }
+
     }
 
 }

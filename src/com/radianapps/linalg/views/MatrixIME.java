@@ -131,7 +131,7 @@ public class MatrixIME extends RelativeLayout {
 
     private void broadcastNumericInput(int number) {
         if (matrixController != null) {
-            // TODO:    matrixController.numericInput(number);
+            matrixController.numericInput(number);
         }
     }
 

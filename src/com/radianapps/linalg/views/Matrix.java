@@ -82,8 +82,8 @@ public class Matrix extends TableLayout {
         this.focus = new Position(focus);
     }
 
-    public void setCellAt(int row, int col, int value) {
-        ((TextView)((TableRow)getChildAt(row)).getChildAt(col)).setText(String.valueOf(value));
+    public void setCellAt(Position position, MatrixController.MatrixData data) {
+        ((TextView)((TableRow)getChildAt(position.x)).getChildAt(position.y)).setText(data.getStrData());
     }
 
     private void focusOnCell(Position cellToFocus) {
