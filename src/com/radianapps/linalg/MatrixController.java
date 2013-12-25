@@ -20,8 +20,6 @@ public class MatrixController {
     private List<List<MatrixData>> matrix;
     private List<Matrix> views;
 
-    private MatrixIME ime;
-
     public MatrixController() {
         matrix = new ArrayList<List<MatrixData>>();
         views = new ArrayList<Matrix>();
@@ -85,13 +83,6 @@ public class MatrixController {
 
     private void putFocusData(MatrixData data) {
         putDataInMatrix(focus, data);
-    }
-
-    public void registerIME(MatrixIME ime) {
-        this.ime = ime;
-        if (ime != null) {
-            ime.registerController(this);
-        }
     }
 
     public void numericInput(int number) {
