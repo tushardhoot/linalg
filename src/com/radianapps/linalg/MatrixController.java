@@ -196,6 +196,10 @@ public class MatrixController {
                 numData = Double.parseDouble(strData);
                 hasDecimalPoint = true;
             } else if (newChar != MatrixIME.DECIMAL) {
+                if (strData.equals("0")) {
+                    strData = "";
+                }
+
                 strData += newChar;
                 numData = Double.parseDouble(strData);
             }
