@@ -20,7 +20,7 @@ import com.radianapps.linalg.R;
 public class MatrixIME extends RelativeLayout {
 
     private MatrixController matrixController;
-    final private int DECIMAL = -1;
+    final static public int DECIMAL = -1;
     public static enum Nav { UP, RIGHT, DOWN, LEFT };
 
     public MatrixIME(Context context, AttributeSet attrs) {
