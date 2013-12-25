@@ -58,7 +58,6 @@ public class Matrix extends TableLayout {
                     ++oldCols;
                     TextView cell = new TextView(getContext());
                     cell.setBackgroundResource(R.drawable.matrix_cell);
-                    cell.setText(Integer.toString(oldCols));
                     tableRow.addView(cell);
                 }
             } else {

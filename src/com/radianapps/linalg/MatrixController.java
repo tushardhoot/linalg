@@ -26,6 +26,20 @@ public class MatrixController {
     }
 
     public void resizeMatrix(int newRows, int newCols) {
+        boolean focusChanged = !focus.inLimits(newRows - 1, newCols - 1);
+        if (focusChanged) {
+            focus.x = 0;
+            focus.y = 0;
+            focus.setValid(true);
+        }
+
+        for (Matrix view : views) {
+            view.resize(newRows, newCols);
+            if (focusChanged) {
+                view.setFocus(focus);
+            }
+        }
+
         int oldRows = numRows();
 
         if (oldRows <= newRows) {
@@ -38,30 +52,19 @@ public class MatrixController {
             }
         }
 
-        for (List<MatrixData> entries : matrix) {
+        for (int rowInd = 0; rowInd < newRows; ++rowInd) {
+            List<MatrixData> entries = matrix.get(rowInd);
             int oldCols = entries.size();
             if (oldCols <= newCols) {
-                for (int j = entries.size(); j < newCols; ++j) {
-                    entries.add(new MatrixData());
+                for (int colInd = entries.size(); colInd < newCols; ++colInd) {
+                    MatrixData data = new MatrixData();
+                    entries.add(data);
+                    putDataInMatrix(new Position(rowInd, colInd), data);
                 }
             } else {
                 for (int j = entries.size(); j > newCols; --j) {
                     entries.remove(j - 1);
                 }
-            }
-        }
-
-        boolean focusChanged = !focus.inLimits(newRows - 1, newCols - 1);
-        if (focusChanged) {
-            focus.x = 0;
-            focus.y = 0;
-            focus.setValid(true);
-        }
-
-        for (Matrix view : views) {
-            view.resize(newRows, newCols);
-            if (focusChanged) {
-                view.setFocus(focus);
             }
         }
     }
