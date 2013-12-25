@@ -20,6 +20,7 @@ public class MatrixIME extends RelativeLayout {
 
     private MatrixController matrixController;
     final static public int DECIMAL = -1;
+    final static public int BACKSPACE = -2;
     public static enum Nav { UP, RIGHT, DOWN, LEFT };
 
     public MatrixIME(Context context, AttributeSet attrs) {
@@ -78,6 +79,7 @@ public class MatrixIME extends RelativeLayout {
         findViewById(R.id.numberEight).setOnClickListener(numHandler);
         findViewById(R.id.numberNine).setOnClickListener(numHandler);
         findViewById(R.id.numberDecimal).setOnClickListener(numHandler);
+        findViewById(R.id.numberBackspace).setOnClickListener(numHandler);
     }
 
     private void navInput(Nav nav) {
@@ -123,6 +125,9 @@ public class MatrixIME extends RelativeLayout {
                 break;
             case R.id.numberDecimal:
                 number = DECIMAL;
+                break;
+            case R.id.numberBackspace:
+                number = BACKSPACE;
                 break;
         }
 

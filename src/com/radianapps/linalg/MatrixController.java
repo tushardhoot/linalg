@@ -90,7 +90,13 @@ public class MatrixController {
 
     public void numericInput(int number) {
         MatrixData data = getFocusData();
-        data.appendToStrData(number);
+
+        if (number == MatrixIME.BACKSPACE) {
+            data.deleteLastFromStrData();
+        } else {
+            data.appendToStrData(number);
+        }
+
         putFocusData(data);
     }
 
@@ -203,6 +209,26 @@ public class MatrixController {
                 strData += newChar;
                 numData = Double.parseDouble(strData);
             }
+        }
+
+        public void deleteLastFromStrData() {
+            if (!strData.equals("0") || !strData.equals("")) {
+                int length = strData.length();
+                char lastChar = strData.charAt(strData.length() - 1);
+
+                strData = strData.substring(0, length - 1);
+                if (length == 1) {
+                    strData = "0";
+                }
+
+                numData = Double.parseDouble(strData);
+
+                if (lastChar == '.') {
+                    hasDecimalPoint = false;
+                }
+            }
+
+
         }
 
         public double getNumData() {
