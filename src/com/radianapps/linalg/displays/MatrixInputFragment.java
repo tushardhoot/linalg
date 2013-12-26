@@ -10,6 +10,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.radianapps.linalg.MatrixController;
 import com.radianapps.linalg.R;
 import com.radianapps.linalg.views.Matrix;
+import com.radianapps.linalg.views.MatrixIME;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +21,7 @@ import com.radianapps.linalg.views.Matrix;
  */
 public class MatrixInputFragment extends SherlockFragment {
     private Spinner rowSpinner, colSpinner;
+    private MatrixIME ime;
     private Matrix matrix;
     private MatrixSpinnerAdapter rowAdapter, colAdapter;
     private AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
@@ -46,6 +48,7 @@ public class MatrixInputFragment extends SherlockFragment {
         rowSpinner = (Spinner) view.findViewById(R.id.rowSpinner);
         colSpinner = (Spinner) view.findViewById(R.id.colSpinner);
         matrix = (Matrix) view.findViewById(R.id.matrixHolder);
+        ime = (MatrixIME) view.findViewById(R.id.matrixIME);
 
         rowAdapter = new MatrixSpinnerAdapter();
         colAdapter = new MatrixSpinnerAdapter();
@@ -56,6 +59,7 @@ public class MatrixInputFragment extends SherlockFragment {
         rowSpinner.setOnItemSelectedListener(spinnerListener);
         colSpinner.setOnItemSelectedListener(spinnerListener);
         matrixController.registerView(matrix);
+        ime.registerController(matrixController);
     }
 
     private void onDimensionChanged(int rows, int columns) {
