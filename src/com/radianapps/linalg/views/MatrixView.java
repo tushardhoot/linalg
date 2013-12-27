@@ -17,7 +17,7 @@ import com.radianapps.linalg.R;
  * Time: 10:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Matrix extends TableLayout {
+public class MatrixView extends TableLayout {
     private int rows = 0, cols = 0;
     private MatrixController controller;
 
@@ -26,11 +26,11 @@ public class Matrix extends TableLayout {
     private final TableRow.LayoutParams rowLp =
             new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
 
-    public Matrix(Context context) {
+    public MatrixView(Context context) {
         this(context, null);
     }
 
-    public Matrix(Context context, AttributeSet attributeSet) {
+    public MatrixView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

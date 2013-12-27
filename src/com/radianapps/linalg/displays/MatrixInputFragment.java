@@ -9,7 +9,7 @@ import android.widget.*;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.radianapps.linalg.MatrixController;
 import com.radianapps.linalg.R;
-import com.radianapps.linalg.views.Matrix;
+import com.radianapps.linalg.views.MatrixView;
 import com.radianapps.linalg.views.MatrixIME;
 
 /**
@@ -22,7 +22,7 @@ import com.radianapps.linalg.views.MatrixIME;
 public class MatrixInputFragment extends SherlockFragment {
     private Spinner rowSpinner, colSpinner;
     private MatrixIME ime;
-    private Matrix matrix;
+    private MatrixView matrixView;
     private MatrixSpinnerAdapter rowAdapter, colAdapter;
     private AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -47,7 +47,7 @@ public class MatrixInputFragment extends SherlockFragment {
 
         rowSpinner = (Spinner) view.findViewById(R.id.rowSpinner);
         colSpinner = (Spinner) view.findViewById(R.id.colSpinner);
-        matrix = (Matrix) view.findViewById(R.id.matrixHolder);
+        matrixView = (MatrixView) view.findViewById(R.id.matrixHolder);
         ime = (MatrixIME) view.findViewById(R.id.matrixIME);
 
         rowAdapter = new MatrixSpinnerAdapter();
@@ -58,7 +58,7 @@ public class MatrixInputFragment extends SherlockFragment {
 
         rowSpinner.setOnItemSelectedListener(spinnerListener);
         colSpinner.setOnItemSelectedListener(spinnerListener);
-        matrixController.registerView(matrix);
+        matrixController.registerView(matrixView);
         ime.registerController(matrixController);
     }
 

@@ -1,6 +1,6 @@
 package com.radianapps.linalg;
 
-import com.radianapps.linalg.views.Matrix;
+import com.radianapps.linalg.views.MatrixView;
 import com.radianapps.linalg.views.MatrixIME;
 
 import java.util.ArrayList;
@@ -18,11 +18,11 @@ public class MatrixController {
     private Position focus = new Position();
 
     private List<List<MatrixData>> matrix;
-    private List<Matrix> views;
+    private List<MatrixView> views;
 
     public MatrixController() {
         matrix = new ArrayList<List<MatrixData>>();
-        views = new ArrayList<Matrix>();
+        views = new ArrayList<MatrixView>();
     }
 
     public void resizeMatrix(int newRows, int newCols) {
@@ -33,7 +33,7 @@ public class MatrixController {
             focus.setValid(true);
         }
 
-        for (Matrix view : views) {
+        for (MatrixView view : views) {
             view.resize(newRows, newCols);
             if (focusChanged) {
                 view.setFocus(focus);
@@ -79,7 +79,7 @@ public class MatrixController {
 
     private void putDataInMatrix(Position position, MatrixData data) {
         matrix.get(position.x).set(position.y, data);
-        for (Matrix view : views) {
+        for (MatrixView view : views) {
             view.setCellAt(position, data);
         }
     }
@@ -135,7 +135,7 @@ public class MatrixController {
                 break;
         }
 
-        for (Matrix view : views) {
+        for (MatrixView view : views) {
             view.setFocus(focus);
         }
     }
@@ -148,27 +148,27 @@ public class MatrixController {
         return matrix.size();
     }
 
-    public void registerView(Matrix matrix) {
-        views.add(matrix);
+    public void registerView(MatrixView matrixView) {
+        views.add(matrixView);
 
-        matrix.resize(numRows(), numCols());
-        matrix.registerController(this);
+        matrixView.resize(numRows(), numCols());
+        matrixView.registerController(this);
 
         for (int rowIndex = 0; rowIndex < this.matrix.size(); ++rowIndex) {
             List<MatrixData> row = this.matrix.get(rowIndex);
             for (int colIndex = 0; colIndex < row.size(); ++colIndex) {
-                matrix.setCellAt(new Position(rowIndex, colIndex), row.get(colIndex));
+                matrixView.setCellAt(new Position(rowIndex, colIndex), row.get(colIndex));
             }
         }
 
         if (focus.inLimits(numRows() - 1, numCols() - 1)) {
-            matrix.setFocus(focus);
+            matrixView.setFocus(focus);
         }
     }
 
-    public void unregisterView(Matrix matrix) {
-        views.remove(matrix);
-        matrix.unregisterController();
+    public void unregisterView(MatrixView matrixView) {
+        views.remove(matrixView);
+        matrixView.unregisterController();
     }
 
     public static class MatrixData {

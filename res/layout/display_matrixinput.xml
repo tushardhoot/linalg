@@ -29,7 +29,7 @@
                 android:spinnerMode="dropdown"
                 android:dropDownWidth="100dp" />
     </LinearLayout>
-    <com.radianapps.linalg.views.Matrix
+    <com.radianapps.linalg.views.MatrixView
         android:id="@+id/matrixHolder"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:shrinkColumns="*"
         android:stretchColumns="*"
         android:orientation="vertical">
-    </com.radianapps.linalg.views.Matrix>
+    </com.radianapps.linalg.views.MatrixView>
     
     <com.radianapps.linalg.views.MatrixIME
             android:id="@+id/matrixIME"
