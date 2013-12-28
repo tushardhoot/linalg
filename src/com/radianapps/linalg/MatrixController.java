@@ -1,5 +1,6 @@
 package com.radianapps.linalg;
 
+import Jama.Matrix;
 import com.radianapps.linalg.views.MatrixView;
 import com.radianapps.linalg.views.MatrixIME;
 
@@ -23,6 +24,17 @@ public class MatrixController {
     public MatrixController() {
         matrix = new ArrayList<List<MatrixData>>();
         views = new ArrayList<MatrixView>();
+    }
+
+    public Matrix toMatrix() {
+        double[][] matrixArray = new double[numRows()][numCols()];
+        for (int rowInd = 0; rowInd < numRows(); ++rowInd) {
+            for (int colInd = 0; colInd < numCols(); ++colInd) {
+                matrixArray[rowInd][colInd] = matrix.get(rowInd).get(colInd).numData;
+            }
+        }
+
+        return new Matrix(matrixArray, numRows(), numCols());
     }
 
     public void resizeMatrix(int newRows, int newCols) {
